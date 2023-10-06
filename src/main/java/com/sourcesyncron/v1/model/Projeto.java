@@ -28,7 +28,7 @@ public class Projeto implements Serializable{
 	@Column
 	private Boolean publico;
 	
-	@ManyToOne(targetEntity = Usuario.class)
+	@ManyToOne
 	private Usuario owner;
 
 	public Long getId() {
