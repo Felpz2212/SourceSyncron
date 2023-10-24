@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sourcesyncron.v1.DTO.UsuarioProjetoDTO;
+import com.sourcesyncron.v1.DTO.UsuarioResponseDTO;
 import com.sourcesyncron.v1.DTO.UsuarioTarefaDTO;
 import com.sourcesyncron.v1.model.Usuario;
 import com.sourcesyncron.v1.model.UsuarioTarefas;
@@ -36,25 +37,30 @@ public class UsuarioController {
 	UsuarioTarefaService usuarioTarefaService;
 	
 	@GetMapping
-	public List<Usuario> findAllUsuarios() {
+	public List<UsuarioResponseDTO> findAllUsuarios() {
 		return usuarioService.findAll();
 	}
 	
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
 		produces = MediaType.APPLICATION_JSON_VALUE)
-	public Usuario createUser(@RequestBody Usuario u) {
+	public UsuarioResponseDTO createUser(@RequestBody Usuario u) {
 		
 		return usuarioService.create(u);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public Usuario findById(@PathVariable(name = "id") Long id) throws Exception {
+	public UsuarioResponseDTO findById(@PathVariable(name = "id") Long id) throws Exception {
 		return usuarioService.findById(id);
 	}
 	
 	@PostMapping(value = "/projeto")
 	public UsuariosProjetos createUserProject(@RequestBody UsuarioProjetoDTO usuarioProjeto) throws Exception {
 		return usuarioProjetoService.create(usuarioProjeto);
+	}
+	
+	@GetMapping(value = "/projeto")
+	public List<UsuariosProjetos> findAllProjects(@RequestBody UsuarioResponseDTO usuario) throws Exception {
+		return usuarioProjetoService.findByUsuario(usuario);
 	}
 	
 	@PostMapping(value="/tarefa")
