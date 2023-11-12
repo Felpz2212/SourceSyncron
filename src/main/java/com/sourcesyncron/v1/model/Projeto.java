@@ -30,6 +30,9 @@ public class Projeto implements Serializable{
 	
 	@ManyToOne
 	private Usuario owner;
+	
+	@Column
+	private String github_link;
 
 	public Long getId() {
 		return id;
@@ -71,9 +74,17 @@ public class Projeto implements Serializable{
 		this.owner = owner;
 	}
 
+	public String getGithub_link() {
+		return github_link;
+	}
+
+	public void setGithub_link(String github_link) {
+		this.github_link = github_link;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(descricao, id, nome, owner, publico);
+		return Objects.hash(descricao, github_link, id, nome, owner, publico);
 	}
 
 	@Override
@@ -85,10 +96,36 @@ public class Projeto implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Projeto other = (Projeto) obj;
-		return Objects.equals(descricao, other.descricao) && Objects.equals(id, other.id)
-				&& Objects.equals(nome, other.nome) && Objects.equals(owner, other.owner)
-				&& Objects.equals(publico, other.publico);
+		return Objects.equals(descricao, other.descricao) && Objects.equals(github_link, other.github_link)
+				&& Objects.equals(id, other.id) && Objects.equals(nome, other.nome)
+				&& Objects.equals(owner, other.owner) && Objects.equals(publico, other.publico);
 	}
+
+	public Projeto(Long id, String nome, String descricao, Boolean publico, Usuario owner, String github_link) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.descricao = descricao;
+		this.publico = publico;
+		this.owner = owner;
+		this.github_link = github_link;
+	}
+	
+	public Projeto(String nome, String descricao, Boolean publico, Usuario owner, String github_link) {
+		super();
+		this.nome = nome;
+		this.descricao = descricao;
+		this.publico = publico;
+		this.owner = owner;
+		this.github_link = github_link;
+	}
+
+	public Projeto() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
 	
 	
 	

@@ -18,6 +18,10 @@ public class UsuariosProjetos implements Serializable {
 		this.usuario = usuario;
 		this.projeto = projeto;
 	}
+	
+	public UsuariosProjetos() {
+		
+	}
 
 	private static final long serialVersionUID = 1L;
 

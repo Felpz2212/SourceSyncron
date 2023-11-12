@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -41,6 +43,7 @@ public class Tarefa implements Serializable {
 	private Projeto projeto;
 	
 	@ManyToOne
+	@Value(value = "1")
 	private Status status;
 
 	public Long getId() {

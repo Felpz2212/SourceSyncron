@@ -1,26 +1,24 @@
-package com.sourcesyncron.v1.DTO;
+package com.sourcesyncron.v1.DTO.usuario;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-public class UsuarioResponseDTO implements Serializable{
+public class UsuarioDTO implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
+	private Long id;
+	private String nome;
+	private String email;
+	private String username;
 	
-	
-	public UsuarioResponseDTO(Long id, String nome, String email, String username) {
+	public UsuarioDTO(Long id, String nome, String email, String username) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.username = username;
 	}
-	
-	private Long id;
-	private String nome;
-	private String email;
-	private String username;
 	
 	public Long getId() {
 		return id;
@@ -59,7 +57,7 @@ public class UsuarioResponseDTO implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		UsuarioResponseDTO other = (UsuarioResponseDTO) obj;
+		UsuarioDTO other = (UsuarioDTO) obj;
 		return Objects.equals(email, other.email) && Objects.equals(id, other.id) && Objects.equals(nome, other.nome)
 				&& Objects.equals(username, other.username);
 	}

@@ -29,6 +29,15 @@ public class Usuario implements Serializable {
 		this.senha = senha;
 	}
 
+	public Usuario(Long id, String nome, String email, String username) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.email = email;
+		this.username = username;
+	}
+	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

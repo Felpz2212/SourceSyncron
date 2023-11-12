@@ -1,14 +1,18 @@
 package com.sourcesyncron.v1.service;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sourcesyncron.v1.DTO.UsuarioProjetoDTO;
-import com.sourcesyncron.v1.DTO.UsuarioResponseDTO;
-import com.sourcesyncron.v1.mapper.UsuarioResponseMapper;
+import com.sourcesyncron.v1.DTO.UsuarioProjeto.UsuarioProjetoDTO;
+import com.sourcesyncron.v1.DTO.UsuarioProjeto.UsuarioProjetoResponseDTO;
+import com.sourcesyncron.v1.DTO.usuario.UsuarioDTO;
+import com.sourcesyncron.v1.mapper.UsuarioProjetoMapper;
+import com.sourcesyncron.v1.mapper.projeto.ProjetoMapper;
+import com.sourcesyncron.v1.mapper.usuario.UsuarioMapper;
 import com.sourcesyncron.v1.model.Projeto;
 import com.sourcesyncron.v1.model.TiposUsuarios;
 import com.sourcesyncron.v1.model.UsuariosProjetos;
@@ -16,11 +20,6 @@ import com.sourcesyncron.v1.repositories.UsuarioProjetosRepository;
 
 @Service
 public class UsuariosProjetosService implements Serializable {
-	
-	/* TODO
-	 * -Criar Exceções personalizadas
-	 *  */
-	
 
 	@Autowired
 	UsuarioProjetosRepository repository;
@@ -34,17 +33,20 @@ public class UsuariosProjetosService implements Serializable {
 	@Autowired
 	TipoUsuarioService tipoUsuarioService;
 	
-	UsuarioResponseMapper mapper = new UsuarioResponseMapper();
+	
+	UsuarioMapper usuarioMapper = new UsuarioMapper();
+	UsuarioProjetoMapper mapper = new UsuarioProjetoMapper();
+	ProjetoMapper projetoMapper = new ProjetoMapper();
 	
 	private static final long serialVersionUID = 1L;
 	
 	public UsuariosProjetos create(UsuarioProjetoDTO usuarioProjetoDTO) throws Exception{
 		
-		UsuarioResponseDTO u = usuarioService.findById(usuarioProjetoDTO.getUsuario());
-		Projeto p = projetoService.findById(usuarioProjetoDTO.getProjeto());
+		UsuarioDTO u = usuarioService.findById(usuarioProjetoDTO.getUsuario());
+		Projeto p = projetoMapper.convertDtoModel(projetoService.findById(usuarioProjetoDTO.getProjeto()));
 		TiposUsuarios tu = tipoUsuarioService.findById(usuarioProjetoDTO.getTipoUsuario());
 		
-		return repository.save(new UsuariosProjetos(tu, mapper.convertDtoToModel(u), p));
+		return repository.save(new UsuariosProjetos(tu, usuarioMapper.convertDtoToModel(u), p));
 	}
 	
 	public List<UsuariosProjetos> findAll(){
@@ -57,7 +59,31 @@ public class UsuariosProjetosService implements Serializable {
 		return repository.findById(id).orElseThrow(() -> new Exception("Id not found"));
 	}
 	
-	public List<UsuariosProjetos> findByUsuario(UsuarioResponseDTO u){
-		return repository.findAllByUsuario(mapper.convertDtoToModel(u));
+	public List<UsuarioProjetoResponseDTO> findByUsuario(Long id) throws Exception{
+	
+		List<UsuarioProjetoResponseDTO> projetos = new ArrayList<>();
+		
+		List<UsuariosProjetos> listBD = new ArrayList<>();
+		listBD = repository.findAllByUsuario(id);
+		
+		for (UsuariosProjetos usuarioProjetoResponseDTO : listBD) {
+			projetos.add(mapper.convertModelDTO(usuarioProjetoResponseDTO));
+		}
+		
+		return projetos;
+	}
+
+	public List<UsuarioProjetoResponseDTO> findUsersByProject(Long id){
+		
+		List<UsuarioProjetoResponseDTO> projetos = new ArrayList<>();
+		
+		List<UsuariosProjetos> listBD = new ArrayList<>();
+		listBD = repository.findAllUsersByProject(id);
+		
+		for (UsuariosProjetos usuarioProjetoResponseDTO : listBD) {
+			projetos.add(mapper.convertModelDTO(usuarioProjetoResponseDTO));
+		}
+		
+		return projetos;
 	}
 }

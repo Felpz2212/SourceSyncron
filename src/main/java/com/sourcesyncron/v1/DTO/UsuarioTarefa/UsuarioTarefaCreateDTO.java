@@ -1,9 +1,11 @@
-package com.sourcesyncron.v1.DTO;
+package com.sourcesyncron.v1.DTO.UsuarioTarefa;
 
-public class UsuarioTarefaDTO {
+public class UsuarioTarefaCreateDTO {
 
 	private Long tarefa;
 	private Long usuario;
+	
+	
 	public Long getTarefa() {
 		return tarefa;
 	}

@@ -13,6 +13,10 @@ import jakarta.persistence.ManyToOne;
 public class UsuarioTarefas implements Serializable{
 
 	private static final long serialVersionUID = 1L;
+	
+	public UsuarioTarefas() {
+		
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

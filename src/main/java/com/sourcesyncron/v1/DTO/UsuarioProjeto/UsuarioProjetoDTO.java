@@ -1,4 +1,4 @@
-package com.sourcesyncron.v1.DTO;
+package com.sourcesyncron.v1.DTO.UsuarioProjeto;
 
 public class UsuarioProjetoDTO {
 	
