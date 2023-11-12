@@ -8,11 +8,12 @@ import org.springframework.stereotype.Service;
 
 import com.sourcesyncron.v1.DTO.UsuarioTarefa.UsuarioTarefaCreateDTO;
 import com.sourcesyncron.v1.DTO.UsuarioTarefa.UsuarioTarefaResponseDTO;
-import com.sourcesyncron.v1.DTO.usuario.UsuarioDTO;
 import com.sourcesyncron.v1.mapper.UsuarioTarefaMapper;
 import com.sourcesyncron.v1.mapper.usuario.UsuarioMapper;
 import com.sourcesyncron.v1.model.Tarefa;
+import com.sourcesyncron.v1.model.Usuario;
 import com.sourcesyncron.v1.model.UsuarioTarefas;
+import com.sourcesyncron.v1.repositories.UsuarioRepository;
 import com.sourcesyncron.v1.repositories.UsuarioTarefaRepository;
 
 @Service
@@ -27,6 +28,9 @@ public class UsuarioTarefaService {
 	@Autowired
 	TarefaService tarefaService;
 	
+	@Autowired
+	UsuarioRepository usuarioRepo;
+	
 
 	UsuarioMapper usuarioMapper = new UsuarioMapper();	
 	UsuarioTarefaMapper usuarioTarefaMapper = new UsuarioTarefaMapper();
@@ -34,9 +38,9 @@ public class UsuarioTarefaService {
 	public UsuarioTarefas createUsuarioTarefa(UsuarioTarefaCreateDTO usuarioTarefaDTO) throws Exception {
 		
 		Tarefa t = tarefaService.findById(usuarioTarefaDTO.getTarefa());
-		UsuarioDTO u = usuarioService.findById(usuarioTarefaDTO.getUsuario());
+		Usuario u = usuarioRepo.findById(usuarioTarefaDTO.getUsuario()).get();
 		
-		UsuarioTarefas ut = new UsuarioTarefas(t.getProjeto(), t, usuarioMapper.convertDtoToModel(u));
+		UsuarioTarefas ut = new UsuarioTarefas(t.getProjeto(), t, u);
 		
 		return usuarioTarefaRepository.save(ut);
 	}

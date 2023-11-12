@@ -1,7 +1,5 @@
 package com.sourcesyncron.v1.mapper;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.sourcesyncron.v1.DTO.UsuarioTarefa.UsuarioTarefaResponseDTO;
 import com.sourcesyncron.v1.mapper.projeto.ProjetoMapper;
 import com.sourcesyncron.v1.mapper.tarefa.TarefaMapper;
@@ -10,8 +8,8 @@ import com.sourcesyncron.v1.model.UsuarioTarefas;
 
 public class UsuarioTarefaMapper {
 	
-	@Autowired
-	UsuarioMapper usuarioMapper;
+	
+	UsuarioMapper usuarioMapper = new UsuarioMapper();
 	ProjetoMapper projetoMapper = new ProjetoMapper();
 	TarefaMapper tarefaMapper = new TarefaMapper();
 	

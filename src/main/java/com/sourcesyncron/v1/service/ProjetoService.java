@@ -63,8 +63,6 @@ public class ProjetoService {
 		up.setProjeto(p);
 		up.setTipoUsuario(tu);
 		
-		System.out.println(up.getId());
-		
 		usuarioProjetoRepository.save(up);
 		
 		return projetoMapper.convertModelDTO(p);
