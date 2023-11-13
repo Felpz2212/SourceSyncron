@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sourcesyncron.v1.DTO.UsuarioProjeto.UsuarioProjetoDTO;
 import com.sourcesyncron.v1.DTO.UsuarioProjeto.UsuarioProjetoResponseDTO;
 import com.sourcesyncron.v1.DTO.projeto.ProjetoCreateDTO;
 import com.sourcesyncron.v1.DTO.projeto.ProjetoResponseDTO;
+import com.sourcesyncron.v1.model.UsuariosProjetos;
 import com.sourcesyncron.v1.service.ProjetoService;
 import com.sourcesyncron.v1.service.UsuariosProjetosService;
 
@@ -28,6 +30,12 @@ public class ProjetoController {
 	
 	@Autowired
 	UsuariosProjetosService usuarioProjetoService;
+	
+	@GetMapping()
+	public List<ProjetoResponseDTO> getAllProjects(){
+		
+		return projetoService.findAllProjetos();
+	}
 	
 	@GetMapping("usuario")
 	public List<UsuarioProjetoResponseDTO> getAllProjectsByUser(@RequestParam("id") Long id) throws Exception{
@@ -53,4 +61,12 @@ public class ProjetoController {
 		
 		return usuarioProjetoService.findUsersByProject(id);
 	}
+	
+	@PostMapping("projeto-usuario")
+	public UsuariosProjetos createUsuarioProjeto(@RequestBody UsuarioProjetoDTO u) throws Exception {
+		
+		return usuarioProjetoService.create(u);
+		
+	}
+	
 }

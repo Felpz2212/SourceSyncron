@@ -56,6 +56,7 @@ public class TarefaService {
 	}
 
 	
+	@SuppressWarnings("unused")
 	public Tarefa update(TarefaCreateDTO t) throws Exception {
 		
 		Tarefa tarefa = tarefaRepository.findById(t.getId()).get();
@@ -68,10 +69,7 @@ public class TarefaService {
 		tarefa.setData_final(t.getData_final());
 		tarefa.setDuracao_estimada(t.getDuracao());
 		tarefa.setStatus(status);
-		tarefa.setProjeto(projetoMapper.convertDtoModel(projeto));
-		
-		
-		
+		tarefa.setProjeto(projetoRepo.findById(t.getProjeto_id()).get());
 		
 		return tarefaRepository.save(tarefa);
 	}

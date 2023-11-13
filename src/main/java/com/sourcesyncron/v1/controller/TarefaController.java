@@ -19,6 +19,7 @@ import com.sourcesyncron.v1.DTO.tarefa.TarefaCreateDTO;
 import com.sourcesyncron.v1.DTO.tarefa.TarefaResponseDTO;
 import com.sourcesyncron.v1.mapper.UsuarioTarefaMapper;
 import com.sourcesyncron.v1.mapper.tarefa.TarefaMapper;
+import com.sourcesyncron.v1.model.Tarefa;
 import com.sourcesyncron.v1.model.UsuarioTarefas;
 import com.sourcesyncron.v1.service.TarefaService;
 import com.sourcesyncron.v1.service.UsuarioTarefaService;
@@ -43,6 +44,13 @@ public class TarefaController {
 	public TarefaResponseDTO createTarefa(@RequestBody TarefaCreateDTO tarefa) throws Exception {
 		
 		return tarefaMapper.convertModelDTO(tarefaService.create(tarefa));
+	}
+	
+	
+	@GetMapping("{id}")
+	public Tarefa getTarefaById(@PathVariable(name = "id") Long id) throws Exception {
+		
+		return tarefaService.findById(id);
 	}
 	
 	@GetMapping("usuario")

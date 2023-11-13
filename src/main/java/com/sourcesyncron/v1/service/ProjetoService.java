@@ -1,5 +1,6 @@
 package com.sourcesyncron.v1.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +40,16 @@ public class ProjetoService {
 	ProjetoMapper projetoMapper = new ProjetoMapper();
 	UsuarioMapper usuarioMapper = new UsuarioMapper();
 	
-	public List<Projeto> findAllProjetos(){
+	public List<ProjetoResponseDTO> findAllProjetos(){
 		
-		return projetoRepository.findAll();
+		List<Projeto> projetos = projetoRepository.findAll();
+		List<ProjetoResponseDTO> projetosDTO = new ArrayList<>();		
+		
+		for (Projeto p : projetos) {
+			projetosDTO.add(projetoMapper.convertModelDTO(p));
+		}
+		
+		return projetosDTO;
 	}
 	
 	public ProjetoResponseDTO findById(Long id) throws Exception{
