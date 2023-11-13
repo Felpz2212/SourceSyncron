@@ -51,6 +51,7 @@ public class TarefaService {
 		tarefa.setNome(t.getNome());
 		tarefa.setProjeto(projeto);
 		tarefa.setPublico(true);
+		tarefa.setStatus(statusService.findOne(1L));
 
 		return tarefaRepository.save(tarefa);
 	}
